@@ -3,115 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turbo Chook Games | Protocol Z</title>
+    <title>Turbo Chook Games</title>
     <style>
         :root {
-            --primary: #ffcc00; 
+            --primary: #ffcc00; /* Turbo Chook Yellow */
             --bg: #0f0f0f;
             --card-bg: #1a1a1a;
             --text: #ffffff;
-            --accent: #00ffcc; 
+            --accent-z: #00ffcc; /* Protocol Z Cyan */
+            --accent-racer: #ff4444; /* Rapid Racer Red */
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg);
             color: var(--text);
             margin: 0;
+            padding: 0;
             line-height: 1.6;
         }
 
+        /* --- HEADER & LOGO --- */
         header {
-            padding: 3rem 2rem;
+            padding: 3rem 1rem;
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=1000');
+            /* SWAP HEADER BACKGROUND BELOW */
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('header-bg.jpg');
             background-size: cover;
+            background-position: center;
             border-bottom: 3px solid var(--primary);
         }
 
-        /* Logo Styling */
-        .logo-container {
+        .logo-container img {
+            max-width: 120px; /* Smaller for mobile */
+            height: auto;
             margin-bottom: 1rem;
         }
 
-        .main-logo {
-            max-width: 150px; /* Adjust this size to fit your logo */
-            height: auto;
-            border-radius: 10px;
+        @media (min-width: 768px) {
+            .logo-container img { max-width: 180px; }
         }
 
         .studio-name {
-            font-size: 3.5rem;
-            font-weight: 800;
+            font-size: 2.2rem;
+            margin: 0;
             color: var(--primary);
             text-transform: uppercase;
-            letter-spacing: 4px;
-            margin: 0;
+            letter-spacing: 2px;
         }
 
-        .studio-tagline {
-            font-style: italic;
-            font-size: 1.2rem;
-            opacity: 0.8;
-            margin-top: 0.5rem;
-        }
-
+        /* --- LAYOUT --- */
         .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
         }
 
+        .game-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Stacked on mobile */
+            gap: 2rem;
+        }
+
+        @media (min-width: 850px) {
+            .game-grid { grid-template-columns: 1fr 1fr; } /* Side-by-side on desktop */
+        }
+
+        /* --- GAME CARDS --- */
         .game-card {
             background: var(--card-bg);
             border-radius: 15px;
-            padding: 2.5rem;
-            border-left: 5px solid var(--accent);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-top: 0;
+            overflow: hidden;
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            border: 1px solid #333;
         }
 
-        .badge {
-            background: var(--accent);
-            color: black;
-            font-size: 0.8rem;
-            padding: 4px 10px;
-            border-radius: 5px;
-            margin-left: 15px;
+        .game-card:hover {
+            transform: translateY(-5px);
         }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+        .game-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #222; /* Placeholder color */
         }
 
-        .feature-box {
-            background: rgba(255,255,255,0.05);
+        .game-info {
             padding: 1.5rem;
-            border-radius: 10px;
+            flex-grow: 1;
+        }
+
+        .protocol-z { border-top: 5px solid var(--accent-z); }
+        .rapid-racer { border-top: 5px solid var(--accent-racer); }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: #000;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 1rem;
             text-align: center;
         }
 
-        .feature-box strong {
-            display: block;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
+        .btn-itch {
+            background: #fa5c5c; /* itch.io red */
+            color: white;
         }
 
         footer {
             text-align: center;
-            padding: 3rem;
+            padding: 4rem 1rem;
+            opacity: 0.5;
             font-size: 0.9rem;
-            opacity: 0.6;
         }
     </style>
 </head>
@@ -119,39 +128,37 @@
 
     <header>
         <div class="logo-container">
-            <img src="logo.png" alt="Turbo Chook Games Logo" class="main-logo">
+            <img src="logo.png" alt="Turbo Chook Logo">
         </div>
         <h1 class="studio-name">Turbo Chook Games</h1>
-        <p class="studio-tagline">Fast. Fierce. Unstoppable.</p>
     </header>
 
     <div class="container">
-        <section class="game-card">
-            <h2>PROTOCOL Z <span class="badge">3D MULTIPLAYER</span></h2>
-            <p>
-                The ultimate test of survival. <strong>Protocol Z</strong> is a high-octane 3D multiplayer 
-                experience where every millisecond counts. 
-            </p>
+        <div class="game-grid">
+            
+            <article class="game-card protocol-z">
+                <img src="protocol-z-thumb.jpg" alt="Protocol Z" class="game-img">
+                <div class="game-info">
+                    <h2 style="color: var(--accent-z);">Protocol Z</h2>
+                    <p>High-stakes 3D multiplayer survival. Every decision matters when the protocol is active.</p>
+                    <span style="font-size: 0.8rem; background: #333; padding: 3px 8px; border-radius: 3px;">3D MULTIPLAYER</span>
+                </div>
+            </article>
 
-            <div class="features">
-                <div class="feature-box">
-                    <strong>Advanced 3D Engine</strong>
-                    Full 3D environments built for tactical depth and speed.
+            <article class="game-card rapid-racer">
+                <img src="rapid-racer-thumb.jpg" alt="Rapid Racer" class="game-img">
+                <div class="game-info">
+                    <h2 style="color: var(--accent-racer);">Rapid Racer</h2>
+                    <p>Breakneck speeds and tight corners. The ultimate arcade racing experience.</p>
+                    <a href="https://itch.io" class="btn btn-itch" target="_blank">Play on itch.io</a>
                 </div>
-                <div class="feature-box">
-                    <strong>Global Multiplayer</strong>
-                    Battle or team up with players across the world in real-time.
-                </div>
-                <div class="feature-box">
-                    <strong>Hardcore Survival</strong>
-                    No hand-holding. Just you, your squad, and the protocol.
-                </div>
-            </div>
-        </section>
+            </article>
+
+        </div>
     </div>
 
     <footer>
-        &copy; 2026 Turbo Chook Games.
+        <p>&copy; 2026 Turbo Chook Games</p>
     </footer>
 
 </body>
