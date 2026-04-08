@@ -20,7 +20,6 @@ body {
     overflow-x: hidden;
 }
 
-/* PARTICLE BACKGROUND */
 canvas {
     position: fixed;
     top: 0;
@@ -59,6 +58,7 @@ header {
     text-decoration: none;
     font-weight: bold;
     transition: 0.3s;
+    cursor: pointer;
 }
 
 .btn:hover {
@@ -126,6 +126,38 @@ footer {
     100% { transform: translateY(0); }
 }
 
+/* POPUP STYLES */
+#gameModal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+}
+
+#gameModal iframe {
+    width: 80%;
+    height: 80%;
+    border: none;
+    border-radius: 12px;
+}
+
+#closeModal {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
 </style></head><body><canvas id="bg"></canvas>
 
 <header>
@@ -152,7 +184,7 @@ footer {
             <h2 style="color: var(--accent-racer);">Extreme Racer</h2>
             <p>High-speed racing with tight corners and insane reflex gameplay.</p>
             <span class="tag">2D RACING</span><br>
-            <a href="https://chickenking9080.itch.io/extreme-racer" class="btn" target="_blank">Play Now</a>
+            <button class="btn" onclick="openGame()">Play Here</button>
         </div>
     </div>
 
@@ -160,43 +192,39 @@ footer {
 
 </div><footer>
     <p>© 2026 Turbo Chook Games</p>
-</footer><script>
+</footer><!-- GAME POPUP MODAL --><div id="gameModal">
+    <span id="closeModal" onclick="closeGame()">&times;</span>
+    <iframe id="gameFrame" src=""></iframe>
+</div><script>
 const canvas = document.getElementById('bg');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particles = [];
-
 for (let i = 0; i < 80; i++) {
-    particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 2,
-        dx: (Math.random() - 0.5) * 0.5,
-        dy: (Math.random() - 0.5) * 0.5
-    });
+    particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2, dx: (Math.random() - 0.5) * 0.5, dy: (Math.random() - 0.5) * 0.5 });
 }
-
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     particles.forEach(p => {
-        p.x += p.dx;
-        p.y += p.dy;
-
+        p.x += p.dx; p.y += p.dy;
         if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255,255,255,0.5)";
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle = 'rgba(255,255,255,0.5)'; ctx.fill();
     });
-
     requestAnimationFrame(animate);
 }
-
 animate();
+
+// GAME MODAL FUNCTIONS
+function openGame() {
+    document.getElementById('gameFrame').src = 'rapid-racer/index.html'; // Godot exported HTML5 path
+    document.getElementById('gameModal').style.display = 'flex';
+}
+function closeGame() {
+    document.getElementById('gameFrame').src = '';
+    document.getElementById('gameModal').style.display = 'none';
+}
 </script></body>
 </html>
