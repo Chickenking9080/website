@@ -1,0 +1,10 @@
+[2026-04-09] — Initial devlog entry
+Welcome to the Turbo Chook Games devlog! This is where we post updates on what's cooking in the studio.
+
+[2026-04-09] — Protocol Z
+Protocol Z is live on itch.io! We've been squashing bugs and polishing gameplay. More updates coming soon.
+
+[2026-04-09] — Extreme Racer
+Extreme Racer was built in just 4 hours in Godot. We're proud of how it turned out and plan to keep improving it.
+
+Stay tuned for more updates!
