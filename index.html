@@ -735,6 +735,7 @@ class="tag">Singleplayer</span>
     const DRIFT_SPD   = 0.15;
     let stars = [];
     let raf;
+    let lastScrollY = window.scrollY;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function resize() {
@@ -755,6 +756,10 @@ class="tag">Singleplayer</span>
     }
 
     function drawFrame() {
+        const scrollY = window.scrollY;
+        const scrollDelta = scrollY - lastScrollY;
+        lastScrollY = scrollY;
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (const s of stars) {
             s.alpha += s.delta;
@@ -764,6 +769,17 @@ class="tag">Singleplayer</span>
             }
             s.x += s.vx;
             if (s.x > canvas.width + s.r) s.x = -s.r;
+
+            // Shift star vertically with scroll so stars scroll with the page
+            s.y -= scrollDelta;
+            if (s.y < -s.r) {
+                s.y = canvas.height + s.r;
+                s.x = Math.random() * canvas.width;
+            } else if (s.y > canvas.height + s.r) {
+                s.y = -s.r;
+                s.x = Math.random() * canvas.width;
+            }
+
             ctx.beginPath();
             ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
