@@ -814,7 +814,7 @@ class="tag">Singleplayer</span>
         raf = requestAnimationFrame(frame);
     }
 
-    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('resize', resize);
     resize();
 
     if (reducedMotion) {
