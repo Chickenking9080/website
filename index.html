@@ -725,54 +725,80 @@ class="tag">Singleplayer</span>
 
 <script>
 /* ============================================================
-   STARFIELD  — canvas-based animated twinkling stars
+   STARFIELD  — canvas-based animated twinkling stars (infinite)
    ============================================================ */
 (function () {
     const canvas = document.getElementById('starfield');
     const ctx    = canvas.getContext('2d');
-    const STAR_COUNT  = 200;
-    const TWINKLE_SPD = 0.018;
-    const DRIFT_SPD   = 0.15;
+
+    const STAR_COUNT      = 200;
+    const TWINKLE_SPD     = 0.018;
+    const DRIFT_SPD       = 0.15;
+    const SCROLL_STRENGTH = 0.45;
+
     let stars = [];
     let raf;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    let lastScrollY = window.scrollY;
+    let scrollVy    = 0;
+
     function resize() {
         canvas.width  = window.innerWidth;
         canvas.height = window.innerHeight;
-        initStars();
+        // Only seed stars on first call; preserve them on subsequent resizes
+        if (!stars.length) initStars();
     }
 
-    function initStars() {
-        stars = Array.from({ length: STAR_COUNT }, () => ({
+    function newStar(y) {
+        return {
             x:     Math.random() * canvas.width,
-            y:     Math.random() * canvas.height,
+            y,
             r:     Math.random() * 1.5 + 0.3,
             alpha: Math.random(),
             delta: (Math.random() - 0.5) * TWINKLE_SPD,
             vx:    (Math.random() * 0.5 + 0.2) * DRIFT_SPD,
-        }));
+        };
     }
 
-    function drawFrame() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    function initStars() {
+        stars = Array.from({ length: STAR_COUNT }, () => newStar(Math.random() * canvas.height));
+    }
+
+    function stepPhysics() {
+        const dy = window.scrollY - lastScrollY;
+        lastScrollY = window.scrollY;
+
+        // Smooth the scroll delta to avoid jitter
+        scrollVy = scrollVy * 0.85 + dy * SCROLL_STRENGTH;
+
         for (const s of stars) {
+            // Twinkle
             s.alpha += s.delta;
             if (s.alpha <= 0 || s.alpha >= 1) {
                 s.delta *= -1;
                 s.alpha = Math.max(0, Math.min(1, s.alpha));
             }
+
+            // Horizontal drift
             s.x += s.vx;
             if (s.x > canvas.width + s.r) s.x = -s.r;
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
-            ctx.fill();
+
+            // Scroll-driven vertical movement
+            s.y += scrollVy;
+
+            // Scrolling down: stars exit bottom → respawn at top
+            if (s.y > canvas.height + s.r) {
+                Object.assign(s, newStar(-s.r));
+            }
+            // Scrolling up: stars exit top → respawn at bottom
+            if (s.y < -s.r) {
+                Object.assign(s, newStar(canvas.height + s.r));
+            }
         }
-        raf = requestAnimationFrame(drawFrame);
     }
 
-    function drawStatic() {
+    function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (const s of stars) {
             ctx.beginPath();
@@ -782,13 +808,19 @@ class="tag">Singleplayer</span>
         }
     }
 
-    window.addEventListener('resize', resize);
+    function frame() {
+        stepPhysics();
+        draw();
+        raf = requestAnimationFrame(frame);
+    }
+
+    window.addEventListener('resize', resize, { passive: true });
     resize();
 
     if (reducedMotion) {
-        drawStatic();
+        draw(); // static stars, no animation
     } else {
-        drawFrame();
+        frame();
     }
 })();
 
