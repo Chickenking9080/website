@@ -723,6 +723,7 @@ class="tag">Singleplayer</span>
     const ctx    = canvas.getContext('2d');
     const STAR_COUNT  = 200;
     const TWINKLE_SPD = 0.018;
+    const DRIFT_SPD   = 0.15;
     let stars = [];
     let raf;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -740,6 +741,7 @@ class="tag">Singleplayer</span>
             r:     Math.random() * 1.5 + 0.3,
             alpha: Math.random(),
             delta: (Math.random() - 0.5) * TWINKLE_SPD,
+            vx:    (Math.random() * 0.5 + 0.2) * DRIFT_SPD,
         }));
     }
 
@@ -751,6 +753,8 @@ class="tag">Singleplayer</span>
                 s.delta *= -1;
                 s.alpha = Math.max(0, Math.min(1, s.alpha));
             }
+            s.x += s.vx;
+            if (s.x > canvas.width + s.r) s.x = -s.r;
             ctx.beginPath();
             ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
