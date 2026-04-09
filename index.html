@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="logo.svg">
-<title>Turbo Chook Games</title>
-
-<style>
+<title>Turbo Chook Games</title><style>
 :root {
     --primary: #ffcc00;
-    --bg: #0a0a0a;
-    --card-bg: rgba(30,30,30,0.6);
+    --bg: #050505;
+    --card-bg: rgba(20,20,20,0.7);
     --text: #ffffff;
     --accent-z: #00ffcc;
     --accent-racer: #ff4444;
@@ -24,7 +21,6 @@ body {
     overflow-x: hidden;
 }
 
-/* BACKGROUND */
 canvas {
     position: fixed;
     top: 0;
@@ -32,40 +28,48 @@ canvas {
     z-index: -1;
 }
 
-/* HEADER */
+/* HERO */
 header {
     text-align: center;
-    padding: 6rem 1rem;
+    padding: 7rem 1rem 5rem;
 }
 
 .logo-container img {
-    max-width: 150px;
+    max-width: 160px;
     animation: float 4s ease-in-out infinite;
 }
 
-.studio-name {
-    font-size: 3rem;
-    color: var(--primary);
+h1 {
+    font-size: 3.5rem;
     letter-spacing: 4px;
+    color: var(--primary);
 }
 
 .hero-text {
     opacity: 0.8;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
-/* BUTTON */
+.cta-buttons {
+    margin-top: 25px;
+}
+
 .btn {
     display: inline-block;
-    margin-top: 25px;
+    margin: 10px;
     padding: 14px 30px;
     background: var(--primary);
     color: black;
     border-radius: 8px;
-    text-decoration: none;
     font-weight: bold;
+    text-decoration: none;
     transition: 0.3s;
-    cursor: pointer;
+}
+
+.btn.secondary {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
 }
 
 .btn:hover {
@@ -73,37 +77,71 @@ header {
     box-shadow: 0 0 20px var(--primary);
 }
 
-/* LAYOUT */
-.container {
+/* SECTION */
+.section {
     max-width: 1200px;
     margin: auto;
-    padding: 2rem;
+    padding: 3rem 1.5rem;
 }
 
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    letter-spacing: 2px;
+}
+
+/* GAME GRID */
 .game-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
 }
 
-/* GAME CARDS */
 .game-card {
     background: var(--card-bg);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
     border-radius: 20px;
     overflow: hidden;
+    position: relative;
     transition: 0.4s;
 }
 
 .game-card:hover {
-    transform: translateY(-12px) scale(1.03);
-    box-shadow: 0 0 30px rgba(255,255,255,0.15);
+    transform: translateY(-10px) scale(1.03);
 }
 
 .game-img {
     width: 100%;
-    height: 220px;
+    height: 240px;
     object-fit: cover;
+    transition: 0.4s;
+}
+
+.game-card:hover .game-img {
+    transform: scale(1.1);
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.game-card:hover .overlay {
+    opacity: 1;
+}
+
+.overlay button {
+    padding: 12px 25px;
+    background: var(--primary);
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .game-info {
@@ -113,41 +151,24 @@ header {
 .protocol-z { border-top: 4px solid var(--accent-z); }
 .rapid-racer { border-top: 4px solid var(--accent-racer); }
 
-.tag {
-    display: inline-block;
-    margin-top: 10px;
-    font-size: 0.75rem;
-    background: #333;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-/* FOOTER */
-footer {
+/* ABOUT */
+.about {
     text-align: center;
-    padding: 3rem 1rem;
-    opacity: 0.5;
-}
-
-/* FLOAT ANIMATION */
-@keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-    100% { transform: translateY(0); }
+    opacity: 0.8;
 }
 
 /* MODAL */
 #gameModal {
     display: none;
     position: fixed;
-    z-index: 999;
     inset: 0;
     background: rgba(0,0,0,0.9);
     justify-content: center;
     align-items: center;
+    z-index: 999;
 }
 
-#gameModal iframe {
+#gameFrame {
     width: 1152px;
     height: 668px;
     max-width: 95%;
@@ -156,86 +177,90 @@ footer {
     border-radius: 12px;
 }
 
-/* CLOSE BUTTON */
 #closeModal {
     position: absolute;
     top: 20px;
     right: 40px;
     font-size: 2rem;
-    color: white;
     cursor: pointer;
 }
 
-/* LOADING */
 #loadingScreen {
     position: absolute;
-    color: white;
     font-size: 1.5rem;
 }
 
-/* FADE */
+/* ANIMATIONS */
 .fade-in {
-    animation: fadeIn 0.4s ease forwards;
+    animation: fadeIn 0.5s ease forwards;
 }
 
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
-</style>
-</head>
 
-<body>
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
 
-<canvas id="bg"></canvas>
+footer {
+    text-align: center;
+    padding: 3rem;
+    opacity: 0.5;
+}
+
+</style></head><body><canvas id="bg"></canvas>
 
 <header>
     <div class="logo-container">
         <img src="logo.svg">
     </div>
-    <h1 class="studio-name">Turbo Chook Games</h1>
-    <p class="hero-text">Fast. Chaotic. Addictive.</p>
-    <a href="#games" class="btn">Explore Games</a>
-</header>
-
-<div class="container" id="games">
-    <div class="game-grid">
-
-        <div class="game-card protocol-z">
-            <img src="protocol-z-thumb.jpg" class="game-img">
-            <div class="game-info">
-                <h2 style="color: var(--accent-z);">Protocol Z</h2>
-                <p>Survive in a chaotic zombie world.</p>
-                <span class="tag">3D MULTIPLAYER</span><br>
-                <a href="#" class="btn">Play / Download</a>
-            </div>
-        </div>
-
-        <div class="game-card rapid-racer">
-            <img src="rapid-racer-thumb.jpg" class="game-img">
-            <div class="game-info">
-                <h2 style="color: var(--accent-racer);">Extreme Racer</h2>
-                <p>High-speed racing madness.</p>
-                <span class="tag">2D RACING</span><br>
-                <button class="btn" onclick="openGame()">Play Here</button>
-            </div>
-        </div>
-
-    </div>
+    <h1>BUILD. SURVIVE. RACE.</h1>
+    <p class="hero-text">Indie games with chaos, speed, and creativity.</p><div class="cta-buttons">
+    <a href="#games" class="btn">Play Now</a>
+    <a href="#about" class="btn secondary">About</a>
 </div>
 
-<footer>
-    <p>© 2026 Turbo Chook Games</p>
-</footer>
+</header><section class="section" id="games">
+    <h2 class="section-title">Games</h2><div class="game-grid">
 
-<!-- MODAL -->
-<div id="gameModal">
+    <div class="game-card protocol-z">
+        <img src="protocol-z-thumb.jpg" class="game-img">
+        <div class="overlay">
+            <button>Coming Soon</button>
+        </div>
+        <div class="game-info">
+            <h2 style="color: var(--accent-z);">Protocol Z</h2>
+            <p>Survive a chaotic zombie world with building and multiplayer systems.</p>
+        </div>
+    </div>
+
+    <div class="game-card rapid-racer">
+        <img src="rapid-racer-thumb.jpg" class="game-img">
+        <div class="overlay">
+            <button onclick="openGame()">Play</button>
+        </div>
+        <div class="game-info">
+            <h2 style="color: var(--accent-racer);">Extreme Racer</h2>
+            <p>High-speed racing with tight corners and fast reactions.</p>
+        </div>
+    </div>
+
+</div>
+
+</section><section class="section about" id="about">
+    <h2 class="section-title">About</h2>
+    <p>Turbo Chook Games is an indie studio focused on fast-paced gameplay, creative mechanics, and multiplayer experiences built with Godot.</p>
+</section><footer>
+    <p>© 2026 Turbo Chook Games</p>
+</footer><div id="gameModal">
     <span id="closeModal" onclick="closeGame()">×</span>
     <div id="loadingScreen">Launching Game...</div>
     <iframe id="gameFrame"></iframe>
-</div>
-
-<script>
+</div><script>
 // PARTICLES
 const canvas = document.getElementById('bg');
 const ctx = canvas.getContext('2d');
@@ -244,13 +269,7 @@ canvas.height = innerHeight;
 
 let particles = [];
 for (let i = 0; i < 80; i++) {
-    particles.push({
-        x: Math.random()*canvas.width,
-        y: Math.random()*canvas.height,
-        r: Math.random()*2,
-        dx: (Math.random()-0.5)*0.5,
-        dy: (Math.random()-0.5)*0.5
-    });
+    particles.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*2, dx:(Math.random()-0.5)*0.5, dy:(Math.random()-0.5)*0.5});
 }
 
 function animate(){
@@ -270,9 +289,9 @@ animate();
 
 // GAME MODAL
 function openGame(){
-    const modal = document.getElementById('gameModal');
-    const frame = document.getElementById('gameFrame');
-    const loading = document.getElementById('loadingScreen');
+    const modal=document.getElementById('gameModal');
+    const frame=document.getElementById('gameFrame');
+    const loading=document.getElementById('loadingScreen');
 
     modal.style.display='flex';
     modal.classList.add('fade-in');
@@ -289,23 +308,16 @@ function openGame(){
 }
 
 function closeGame(){
-    const modal=document.getElementById('gameModal');
-    const frame=document.getElementById('gameFrame');
-
-    modal.style.display='none';
-    frame.src='';
+    document.getElementById('gameModal').style.display='none';
+    document.getElementById('gameFrame').src='';
 }
 
-// CLOSE OUTSIDE
-window.onclick = (e)=>{
+window.onclick=(e)=>{
     if(e.target.id==='gameModal') closeGame();
 };
 
-// ESC CLOSE
 document.addEventListener('keydown',(e)=>{
     if(e.key==='Escape') closeGame();
 });
-</script>
-
-</body>
+</script></body>
 </html>
