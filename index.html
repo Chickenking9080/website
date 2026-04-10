@@ -440,59 +440,6 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.5); }
     text-transform: uppercase;
 }
 
-/* ===== DEVLOG ===== */
-.devlog-wrap {
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    box-shadow: var(--shadow-card);
-}
-
-.devlog-header {
-    padding: 0.85rem 1.25rem;
-    border-bottom: 1px solid var(--card-border);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255,204,0,0.04);
-}
-
-.devlog-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--primary);
-    animation: devlog-pulse 2.5s ease-in-out infinite;
-}
-@keyframes devlog-pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.5; transform: scale(0.8); }
-}
-
-.devlog-title {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--primary);
-}
-
-#devlog {
-    padding: 1.25rem;
-    max-height: 220px;
-    overflow-y: auto;
-    font-size: 0.875rem;
-    line-height: 1.75;
-    color: var(--text-muted);
-    white-space: pre-wrap;
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary) transparent;
-}
-#devlog::-webkit-scrollbar { width: 5px; }
-#devlog::-webkit-scrollbar-track { background: transparent; }
-#devlog::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
-
 /* ===== CARD ACTIONS ===== */
 .card-actions {
     display: flex;
@@ -769,7 +716,6 @@ nav.nav-open .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-
         </a>
         <ul class="nav-links" id="nav-links" role="list">
             <li><a href="games.html">Games</a></li>
-            <li><a href="#devlog">Devlog</a></li>
             <li><a href="about.html">About</a></li>
         </ul>
         <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
@@ -787,7 +733,7 @@ nav.nav-open .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-
     <p class="hero-sub">Fun games built with passion.</p>
     <div class="hero-cta">
         <a href="#games" class="btn btn-primary">Explore Games</a>
-        <a href="#devlog" class="btn btn-outline">Read Devlog</a>
+        <a href="games.html" class="btn btn-outline">View All Games</a>
     </div>
     <div class="scroll-hint" aria-hidden="true">
         <span>↓</span>scroll
@@ -804,31 +750,8 @@ nav.nav-open .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-
     </div>
     <div class="grid">
 
-        <!-- PROTOCOL Z -->
-        <article class="card reveal reveal-delay-1">
-            <div class="card-thumb">
-                <img src="protocol-z-thumb.jpg" alt="Protocol Z — zombie survival game screenshot" class="card-img">
-                <div class="overlay" aria-hidden="true">
-                    <button class="btn btn-primary" onclick="openProtocol()">▶ Play</button>
-                </div>
-            </div>
-            <div class="card-content">
-                <h3>Protocol Z</h3>
-                <p>Retro style zombie survival with building, crafting and multiplayer.</p>
-                <div class="card-footer">
-                    <span class="tag">Survival</span>
-                    <span class="tag">Multiplayer</span>
-                    <span class="tag">Singleplayer</span>
-                </div>
-                <div class="card-actions">
-                    <button class="btn btn-primary btn-sm" onclick="openProtocol()">▶ Play</button>
-                    <a href="games.html#protocol-z" class="btn btn-outline btn-sm">Learn More</a>
-                </div>
-            </div>
-        </article>
-
         <!-- EXTREME RACER -->
-        <article class="card reveal reveal-delay-2">
+        <article class="card reveal reveal-delay-1">
             <div class="card-thumb">
                 <img src="rapid-racer-thumb.jpg" alt="Extreme Racer — fast reflex racing game screenshot" class="card-img">
                 <div class="overlay" aria-hidden="true">
@@ -851,24 +774,32 @@ nav.nav-open .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-
             </div>
         </article>
 
+        <!-- PROTOCOL Z -->
+        <article class="card reveal reveal-delay-2">
+            <div class="card-thumb">
+                <img src="protocol-z-thumb.jpg" alt="Protocol Z — zombie survival game screenshot" class="card-img">
+                <div class="overlay" aria-hidden="true">
+                    <button class="btn btn-primary" onclick="openProtocol()">▶ Play</button>
+                </div>
+            </div>
+            <div class="card-content">
+                <h3>Protocol Z</h3>
+                <p>Retro style zombie survival with building, crafting and multiplayer.</p>
+                <div class="card-footer">
+                    <span class="tag">Survival</span>
+                    <span class="tag">Multiplayer</span>
+                    <span class="tag">Singleplayer</span>
+                </div>
+                <div class="card-actions">
+                    <button class="btn btn-primary btn-sm" onclick="openProtocol()">▶ Play</button>
+                    <a href="games.html#protocol-z" class="btn btn-outline btn-sm">Learn More</a>
+                </div>
+            </div>
+        </article>
+
     </div>
 </section>
 
-<!-- Devlog section -->
-<section class="section" id="devlog" aria-labelledby="devlog-heading">
-    <div class="section-header reveal">
-        <span class="section-label">📋 Updates</span>
-        <h2 id="devlog-heading">Devlog</h2>
-        <div class="section-divider"></div>
-    </div>
-    <div class="devlog-wrap reveal reveal-delay-1">
-        <div class="devlog-header" aria-hidden="true">
-            <span class="devlog-dot"></span>
-            <span class="devlog-title">Latest entries</span>
-        </div>
-        <div id="devlog" role="log" aria-live="polite" aria-label="Developer log">Loading…</div>
-    </div>
-</section>
 </main>
 
 <!-- Footer -->
@@ -1036,21 +967,6 @@ nav.nav-open .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 })();
-
-/* ============================================================
-   DEVLOG LOADER
-   ============================================================ */
-fetch('devlog.txt')
-    .then(res => {
-        if (!res.ok) throw new Error('not found');
-        return res.text();
-    })
-    .then(text => {
-        document.getElementById('devlog').textContent = text;
-    })
-    .catch(() => {
-        document.getElementById('devlog').textContent = 'No devlog entries yet. Stay tuned!';
-    });
 
 /* ============================================================
    GAME LAUNCHERS

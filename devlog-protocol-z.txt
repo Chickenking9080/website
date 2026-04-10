@@ -1,0 +1,2 @@
+[2026-04-09] — Protocol Z is Live!
+Protocol Z is live on itch.io! I've been squashing bugs and polishing gameplay. Singleplayer only works on the HTML version so keep that in mind as Windows downloads aren't available yet. More updates coming soon.
