@@ -1,0 +1,2 @@
+[2026-04-09] — Extreme Racer Released
+Extreme Racer was built in just 4 hours in Godot as a game jam challenge and has now finally released for the public! It was the first game I made after switching to Godot. More updates coming soon!

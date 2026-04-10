@@ -452,6 +452,52 @@ kbd {
     flex-shrink: 0;
 }
 
+/* ===== DEVLOG PANEL ===== */
+.game-devlog { margin-top: 0; }
+
+.devlog-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,204,0,0.08);
+    border: 1px solid rgba(255,204,0,0.25);
+    border-radius: var(--radius-sm);
+    color: var(--primary);
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.55rem;
+    padding: 0.55rem 1rem;
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+    letter-spacing: 0.05em;
+}
+.devlog-toggle:hover,
+.devlog-toggle:focus-visible {
+    background: rgba(255,204,0,0.15);
+    border-color: rgba(255,204,0,0.5);
+}
+.devlog-toggle:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+.devlog-toggle[aria-expanded="true"] { background: rgba(255,204,0,0.12); }
+
+.devlog-content {
+    display: none;
+    margin-top: 1rem;
+    background: rgba(0,0,0,0.35);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem 1.5rem;
+}
+.devlog-content.open { display: block; }
+
+.devlog-content pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: 'Inter', monospace;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+
 /* ===== MODAL ===== */
 #modal {
     display: none;
@@ -691,15 +737,70 @@ footer strong { color: var(--primary); }
 <main>
 <div class="section">
 
+    <!-- EXTREME RACER -->
+    <article class="game-section reveal" id="extreme-racer">
+        <div class="game-split">
+            <div class="game-img-wrap">
+                <img src="rapid-racer-thumb.jpg" alt="Extreme Racer — fast reflex racing game screenshot">
+                <span class="game-img-badge">Racing</span>
+            </div>
+            <div class="game-info">
+                <p class="game-number">GAME 01</p>
+                <h2>Extreme Racer</h2>
+                <p>A lightning-fast arcade racer built in just 4 hours during a game jam using Godot. Dodge traffic, push your reflexes to the limit, and chase a high score on a never-ending road.</p>
+                <div class="game-tags">
+                    <span class="tag">Racing</span>
+                    <span class="tag">Arcade</span>
+                    <span class="tag">Retro</span>
+                    <span class="tag">Singleplayer</span>
+                    <span class="tag">Godot</span>
+                </div>
+                <div class="game-cta">
+                    <button class="btn btn-primary btn-sm" onclick="openRacer()">▶ Play Now</button>
+                    <a href="https://github.com/Chickenking9080/Extreme-Racer" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        View on GitHub
+                    </a>
+                    <a href="https://chickenking9080.itch.io/" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">🕹️ itch.io</a>
+                </div>
+            </div>
+        </div>
+        <div class="game-details">
+            <div>
+                <h3 class="detail-heading">About the Game</h3>
+                <p class="detail-text">Extreme Racer was made in 4 hours as a game jam challenge — a testament to what you can build with focus and a clear idea. The game features pixel-art inspired visuals, an escalating difficulty curve, and an addictive score loop. It proved that a fun game doesn't need months of work — just a great core mechanic.</p>
+            </div>
+            <div>
+                <h3 class="detail-heading">Controls</h3>
+                <ul class="controls-list" aria-label="Extreme Racer controls">
+                    <li class="control-item"><kbd>← → / A D</kbd> Steer</li>
+                    <li class="control-item"><kbd>↑ / W</kbd> Accelerate</li>
+                    <li class="control-item"><kbd>↓ / S</kbd> Brake</li>
+                    <li class="control-item"><kbd>Space</kbd> Handbrake</li>
+                    <li class="control-item"><kbd>R</kbd> Restart</li>
+                </ul>
+            </div>
+            <div class="game-devlog">
+                <h3 class="detail-heading">Devlog</h3>
+                <button class="devlog-toggle" aria-expanded="false" aria-controls="devlog-racer" onclick="toggleDevlog(this, 'devlog-extreme-racer.txt', 'devlog-racer')">
+                    📋 Read Devlog
+                </button>
+                <div class="devlog-content" id="devlog-racer" aria-live="polite">
+                    <pre>Loading…</pre>
+                </div>
+            </div>
+        </div>
+    </article>
+
     <!-- PROTOCOL Z -->
-    <article class="game-section reveal" id="protocol-z">
+    <article class="game-section reveal reveal-delay-1" id="protocol-z">
         <div class="game-split">
             <div class="game-img-wrap">
                 <img src="protocol-z-thumb.jpg" alt="Protocol Z — zombie survival game screenshot">
                 <span class="game-img-badge">Survival</span>
             </div>
             <div class="game-info">
-                <p class="game-number">GAME 01</p>
+                <p class="game-number">GAME 02</p>
                 <h2>Protocol Z</h2>
                 <p>A retro-style top-down zombie survival game built with Godot. Scavenge for resources, construct defences, craft weapons, and fend off waves of the undead — alone or with friends.</p>
                 <div class="game-tags">
@@ -735,51 +836,14 @@ footer strong { color: var(--primary); }
                     <li class="control-item"><kbd>Space</kbd> Dodge / Roll</li>
                 </ul>
             </div>
-        </div>
-    </article>
-
-    <!-- EXTREME RACER -->
-    <article class="game-section reveal reveal-delay-1" id="extreme-racer">
-        <div class="game-split">
-            <div class="game-img-wrap">
-                <img src="rapid-racer-thumb.jpg" alt="Extreme Racer — fast reflex racing game screenshot">
-                <span class="game-img-badge">Racing</span>
-            </div>
-            <div class="game-info">
-                <p class="game-number">GAME 02</p>
-                <h2>Extreme Racer</h2>
-                <p>A lightning-fast arcade racer built in just 4 hours during a game jam using Godot. Dodge traffic, push your reflexes to the limit, and chase a high score on a never-ending road.</p>
-                <div class="game-tags">
-                    <span class="tag">Racing</span>
-                    <span class="tag">Arcade</span>
-                    <span class="tag">Retro</span>
-                    <span class="tag">Singleplayer</span>
-                    <span class="tag">Godot</span>
+            <div class="game-devlog">
+                <h3 class="detail-heading">Devlog</h3>
+                <button class="devlog-toggle" aria-expanded="false" aria-controls="devlog-protocol" onclick="toggleDevlog(this, 'devlog-protocol-z.txt', 'devlog-protocol')">
+                    📋 Read Devlog
+                </button>
+                <div class="devlog-content" id="devlog-protocol" aria-live="polite">
+                    <pre>Loading…</pre>
                 </div>
-                <div class="game-cta">
-                    <button class="btn btn-primary btn-sm" onclick="openRacer()">▶ Play Now</button>
-                    <a href="https://github.com/Chickenking9080/Extreme-Racer" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                        View on GitHub
-                    </a>
-                    <a href="https://chickenking9080.itch.io/" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">🕹️ itch.io</a>
-                </div>
-            </div>
-        </div>
-        <div class="game-details">
-            <div>
-                <h3 class="detail-heading">About the Game</h3>
-                <p class="detail-text">Extreme Racer was made in 4 hours as a game jam challenge — a testament to what you can build with focus and a clear idea. The game features pixel-art inspired visuals, an escalating difficulty curve, and an addictive score loop. It proved that a fun game doesn't need months of work — just a great core mechanic.</p>
-            </div>
-            <div>
-                <h3 class="detail-heading">Controls</h3>
-                <ul class="controls-list" aria-label="Extreme Racer controls">
-                    <li class="control-item"><kbd>← → / A D</kbd> Steer</li>
-                    <li class="control-item"><kbd>↑ / W</kbd> Accelerate</li>
-                    <li class="control-item"><kbd>↓ / S</kbd> Brake</li>
-                    <li class="control-item"><kbd>Space</kbd> Handbrake</li>
-                    <li class="control-item"><kbd>R</kbd> Restart</li>
-                </ul>
             </div>
         </div>
     </article>
@@ -934,6 +998,41 @@ footer strong { color: var(--primary); }
     }, { threshold: 0.08 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 })();
+
+/* ============================================================
+   DEVLOG TOGGLE
+   ============================================================ */
+const devlogCache = {};
+function toggleDevlog(btn, file, panelId) {
+    const panel = document.getElementById(panelId);
+    const isOpen = panel.classList.contains('open');
+
+    if (isOpen) {
+        panel.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.textContent = '📋 Read Devlog';
+        return;
+    }
+
+    panel.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+    btn.textContent = '📋 Hide Devlog';
+
+    if (devlogCache[file]) {
+        panel.querySelector('pre').textContent = devlogCache[file];
+        return;
+    }
+
+    fetch(file)
+        .then(res => { if (!res.ok) throw new Error('not found'); return res.text(); })
+        .then(text => {
+            devlogCache[file] = text;
+            panel.querySelector('pre').textContent = text;
+        })
+        .catch(() => {
+            panel.querySelector('pre').textContent = 'No devlog entries yet. Stay tuned!';
+        });
+}
 
 /* ============================================================
    GAME LAUNCHERS
